@@ -444,38 +444,28 @@ proc ::crvFit::estimate {{n 100}} {
 	return $results;
 };
 #
-#procedure that ...
-proc ::crvFit::MonteCarloEstimation {nAvg nMC {n 100}} {
-	# - $nAvg: a number of estimated parameter sets in order to estimate averaged value
-	# - $nMC: a number of estimated averages used for the Monte Carlo approximation
+#procedure: result of the least absolute value method with the Monte Carlo approximation
+proc ::crvFit::estimateMC {N {n 100}} {
+	# - $N: a number of estimated parameter sets in order to estimate average
 	# - $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 	#
-	#$n is not less than 10
-	set nAvg [expr {$nAvg<10?10:int($nAvg)}];
-	set nMC [expr {$nMC<10?10:int($nMC)}];
+	#$N and $n are not less than 10
+	set N [expr {$N<10?10:int($N)}];
 	set n [expr {$n<10?10:int($n)}];
 	#
 	set l {};
 	set avg {};
 	set i 0;
-	set j 0;
 	#
-	while {$i<$nMC} {
-		set l {};
-		set j 0;
-		while {$j<$nAvg} {
-			lappend l [::crvFit::estimate $n];
-			incr j 1;
-		};
-		lappend avg [expr {lAvg($l)}];
+	while {$i<$N} {
+		lappend l [::crvFit::estimate $n];
 		incr i 1;
 	};
-	#the Monte Carlo approximation
-	set mean [expr {lAvg($avg)}];
-	set SE [expr {lSE($avg,$mean)}];
-	set SE95 [expr {lSE95($avg,$mean)}];
+	set avg [expr {lAvg($l)}];
+	set SE [expr {lSE($l,$avg)}];
+	set SE95 [expr {lSE95($l,$avg)}];
 	###
-	puts stdout "avg:$mean";
+	puts stdout "avg:$avg";
 	puts stdout "SEr:$SE";
 	puts stdout "S95:$SE95";
 };
