@@ -40,6 +40,12 @@
 # - `::crvFit::estimate ?n?;`
 #	procedure that estimates parameters
 # 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
+#
+# - `::crvFit::estimateMC N ?n?;`
+# 	procedure returns result of the least absolute value method with the Monte Carlo approximation  
+# 	returned value is named list
+# 	- $N: a number of estimated parameter sets in order to estimate average
+# 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 #--------------------------------------------------------------------
 #
 #*** <namespace ::tcl::mathfunc> ***
@@ -84,7 +90,7 @@ package require Tcl 8.6;
 #
 #additional math function
 #*** <namespace ::tcl::mathfunc> ***
-#=== lSum.tcl (Yuji SODE, 2018): https://gist.github.com/YujiSODE/1f9a4e2729212691972b196a76ba9bd0 ===
+#=== lSum_min.tcl (Yuji SODE, 2018): https://gist.github.com/YujiSODE/1f9a4e2729212691972b196a76ba9bd0 ===
 #Additional mathematical function for Tcl expressions
 # [References]
 # - Iri, M., and Fujino., Y. 1985. Suchi keisan no joshiki (in Japanese). Kyoritsu Shuppan Co., Ltd.; ISBN 978-4-320-01343-8
@@ -243,9 +249,11 @@ namespace eval ::crvFit {
 	#a list of x-y data
 	variable DATA {};
 	#
-	#--- variable for estimation ---
 	#the sum of abs(y-f(x))
 	variable D [expr {double(0)}];
+	#
+	#log of estimation
+	variable LOG {};
 };
 #
 #=== procedures ===
@@ -442,12 +450,13 @@ proc ::crvFit::estimate {{n 100}} {
 	return $results;
 };
 #
-#procedure: result of the least absolute value method with the Monte Carlo approximation
+#procedure returns result of the least absolute value method with the Monte Carlo approximation
+#returned value is named list
 proc ::crvFit::estimateMC {N {n 100}} {
 	# - $N: a number of estimated parameter sets in order to estimate average
 	# - $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 	#
-	variable ::crvFit::FORMULA;variable ::crvFit::PRM;variable ::crvFit::D;
+	variable ::crvFit::FORMULA;variable ::crvFit::PRM;variable ::crvFit::D;variable ::crvFit::LOG;
 	#
 	#$N and $n are not less than 10
 	set N [expr {$N<10?10:int($N)}];
@@ -455,6 +464,9 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	#
 	#$R is a result array
 	array set R {};
+	#
+	#estimation log
+	set ::crvFit::LOG "\#time stamp:[clock format [clock second]]";
 	#
 	#variables for Monte Carlo approximation
 	set l {};
@@ -466,16 +478,19 @@ proc ::crvFit::estimateMC {N {n 100}} {
 		incr i 1;
 	};
 	set avg [expr {lAvg($l)}];
-	set SE [expr {lSE($l,$avg)}];
-	set SE95 [expr {lSE95($l,$avg)}];
-	###
-		puts stdout "formula:$::crvFit::FORMULA";
-		puts stdout "number of data sets:$N";
-		puts stdout "sample size of a single estimation:$n";
-		puts stdout "avg:$avg";
-		puts stdout "SEr:$SE";
-		puts stdout "S95:$SE95";
-	###
+	#
+	append ::crvFit::LOG "\n\#formula:$::crvFit::FORMULA";
+	append ::crvFit::LOG "\n\#data sets:$N";
+	append ::crvFit::LOG "\n\#sample size of a single estimation:$n";
+	append ::crvFit::LOG "\n\#--------------------------------------------------------------------";
+	append ::crvFit::LOG "\n\#averages";
+	append ::crvFit::LOG "\n\#$avg";
+	append ::crvFit::LOG "\n\#standard errors";
+	append ::crvFit::LOG "\n\#[expr {lSE($l,$avg)}]";
+	append ::crvFit::LOG "\n\#standard errors(95%)";
+	append ::crvFit::LOG "\n\#[expr {lSE95($l,$avg)}]";
+	append ::crvFit::LOG "\n\#====================================================================";
+	#
 	#--- estimated curve function ---
 	array set R $avg;
 	foreach e [lsort -unique [array names R]] {
@@ -501,6 +516,8 @@ proc ::crvFit::estimateMC {N {n 100}} {
 		incr i 1;
 	};
 	#
-	unset l avg i SE SE95 xys Nxy x y;
+	unset l avg i xys Nxy x y;
+	puts stdout "\#=== estimation log ===\n$::crvFit::LOG";
+	#
 	return "[array get R] d_abs [format %e $::crvFit::D]";
 };
