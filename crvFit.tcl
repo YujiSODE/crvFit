@@ -243,7 +243,7 @@ namespace eval ::crvFit {
 	#a list of x-y data
 	variable DATA {};
 	#
-	#--- variables for estimation ---
+	#--- variable for estimation ---
 	#the sum of abs(y-f(x))
 	variable D [expr {double(0)}];
 };
@@ -368,7 +368,7 @@ proc ::crvFit::loadXY {{xyList {}}} {
 proc ::crvFit::estimate {{n 100}} {
 	# - $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 	#
-	variable ::crvFit::FORMULA;variable ::crvFit::PRM;variable ::crvFit::D;
+	variable ::crvFit::FORMULA;variable ::crvFit::PRM;
 	#
 	#error is returned when $::crvFit::FORMULA is not defined
 	if {[llength $::crvFit::FORMULA]<1} {error "ERROR: formula is not defined"};
@@ -395,10 +395,10 @@ proc ::crvFit::estimate {{n 100}} {
 		set vars($e) $::crvFit::PRM($e);
 	};
 	#
-	#x-y data as an array
 	set xys [::crvFit::loadXY];
 	#$Nxy is data length
 	set Nxy [llength $xys];
+	#x-y data as an array
 	array set x {};
 	array set y {};
 	set i 0;
@@ -434,8 +434,6 @@ proc ::crvFit::estimate {{n 100}} {
 	};
 	#
 	set results [array get vars];
-	lappend results n;
-	lappend results $n;
 	lappend results d_abs;
 	lappend results $d;
 	#
@@ -449,10 +447,16 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	# - $N: a number of estimated parameter sets in order to estimate average
 	# - $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 	#
+	variable ::crvFit::FORMULA;variable ::crvFit::PRM;variable ::crvFit::D;
+	#
 	#$N and $n are not less than 10
 	set N [expr {$N<10?10:int($N)}];
 	set n [expr {$n<10?10:int($n)}];
 	#
+	#$R is a result array
+	array set R {};
+	#
+	#variables for Monte Carlo approximation
 	set l {};
 	set avg {};
 	set i 0;
@@ -465,7 +469,38 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	set SE [expr {lSE($l,$avg)}];
 	set SE95 [expr {lSE95($l,$avg)}];
 	###
-	puts stdout "avg:$avg";
-	puts stdout "SEr:$SE";
-	puts stdout "S95:$SE95";
+		puts stdout "formula:$::crvFit::FORMULA";
+		puts stdout "number of data sets:$N";
+		puts stdout "sample size of a single estimation:$n";
+		puts stdout "avg:$avg";
+		puts stdout "SEr:$SE";
+		puts stdout "S95:$SE95";
+	###
+	#--- estimated curve function ---
+	array set R $avg;
+	foreach e [lsort -unique [array names R]] {
+		::crvFit::setParameter $e $R($e);
+	};
+	unset ::crvFit::PRM(d_abs);
+	unset R(d_abs);
+	#
+	set xys [::crvFit::loadXY];
+	#$Nxy is data length
+	set Nxy [llength $xys];
+	#x-y data as an array
+	array set x {};
+	array set y {};
+	set ::crvFit::D [expr {double(0)}];
+	set i 0;
+	while {$i<$Nxy} {
+		set xy [split [lindex $xys $i] ,]
+		set x($i) [expr {double([lindex $xy 0])}];
+		set y($i) [expr {double([lindex $xy 1])}];
+		#
+		set ::crvFit::D [expr {$::crvFit::D+abs($y($i)-crvFit_F($x($i)))}];
+		incr i 1;
+	};
+	#
+	unset l avg i SE SE95 xys Nxy x y;
+	return "[array get R] d_abs [format %e $::crvFit::D]";
 };
