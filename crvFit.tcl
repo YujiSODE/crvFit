@@ -51,7 +51,7 @@
 #*** <namespace ::tcl::mathfunc> ***
 #additional math function
 #
-#--- lSum.tcl (Yuji SODE, 2018): https://gist.github.com/YujiSODE/1f9a4e2729212691972b196a76ba9bd0 ---
+#--- lSum_min.tcl (Yuji SODE, 2018): https://gist.github.com/YujiSODE/1f9a4e2729212691972b196a76ba9bd0 ---
 # - `lSum(list)`: function that returns sum of given list
 # 	- `$list`: a numerical list
 #--------------------------------------------------------------------
@@ -92,7 +92,7 @@ package require Tcl 8.6;
 #*** <namespace ::tcl::mathfunc> ***
 #=== lSum_min.tcl (Yuji SODE, 2018): https://gist.github.com/YujiSODE/1f9a4e2729212691972b196a76ba9bd0 ===
 #Additional mathematical function for Tcl expressions
-# [References]
+# [Reference]
 # - Iri, M., and Fujino., Y. 1985. Suchi keisan no joshiki (in Japanese). Kyoritsu Shuppan Co., Ltd.; ISBN 978-4-320-01343-8
 proc ::tcl::mathfunc::lSum {list} {namespace path {::tcl::mathop};set S 0.0;set R 0.0;set T 0.0;foreach e $list {set R [+ $R [expr double($e)]];set T $S;set S [+ $S $R];set T [+ $S [expr {-$T}]];set R [+ $R [expr {-$T}]];};return $S;};
 #--------------------------------------------------------------------
