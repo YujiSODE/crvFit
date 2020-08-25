@@ -1,5 +1,5 @@
 #crvFit
-#test01.tcl
+#sample01.tcl
 source crvFit.tcl;
 namespace path ::crvFit;
 #
