@@ -38,7 +38,8 @@
 # 	- $xyList: a list of x-y data, and every element is expressed as "x,y"
 #
 # - `::crvFit::estimate ?n?;`
-#	procedure that estimates parameters
+#	procedure that estimates parameters  
+# 	returned value is named list
 # 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 #
 # - `::crvFit::estimateMC N ?n?;`
@@ -373,6 +374,7 @@ proc ::crvFit::loadXY {{xyList {}}} {
 };
 #
 #procedure that estimates parameters
+#returned value is named list
 proc ::crvFit::estimate {{n 100}} {
 	# - $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 	#
@@ -466,7 +468,7 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	array set R {};
 	#
 	#estimation log
-	set ::crvFit::LOG "\#time stamp:[clock format [clock second]]";
+	set ::crvFit::LOG "\#crvFit.tcl:\[[clock format [clock second]]\]";
 	#
 	#variables for Monte Carlo approximation
 	set l {};
@@ -483,12 +485,9 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	append ::crvFit::LOG "\n\#data sets:$N";
 	append ::crvFit::LOG "\n\#sample size of a single estimation:$n";
 	append ::crvFit::LOG "\n\#--------------------------------------------------------------------";
-	append ::crvFit::LOG "\n\#averages";
-	append ::crvFit::LOG "\n\#$avg";
-	append ::crvFit::LOG "\n\#standard errors";
-	append ::crvFit::LOG "\n\#[expr {lSE($l,$avg)}]";
-	append ::crvFit::LOG "\n\#standard errors(95%)";
-	append ::crvFit::LOG "\n\#[expr {lSE95($l,$avg)}]";
+	append ::crvFit::LOG "\n\#averages\n\#$avg";
+	append ::crvFit::LOG "\n\#standard errors\n\#[expr {lSE($l,$avg)}]";
+	append ::crvFit::LOG "\n\#standard errors(95%)\n\#[expr {lSE95($l,$avg)}]";
 	append ::crvFit::LOG "\n\#====================================================================";
 	#
 	#--- estimated curve function ---
@@ -520,4 +519,46 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	puts stdout "\#=== estimation log ===\n$::crvFit::LOG";
 	#
 	return "[array get R] d_abs [format %e $::crvFit::D]";
+};
+#
+#procedure ...
+proc ::crvFit::outputLog {namedList fileName} {
+	# - $namedList: a named list that is returned by `::crvFit::estimate ?n?;` or `::crvFit::estimateMC N ?n?;`
+	# - $fileName: a name of file to output
+	#
+	variable ::crvFit::FORMULA;variable ::crvFit::LOG;
+	#
+	#error is returned when $::crvFit::FORMULA is not defined
+	if {[llength $::crvFit::FORMULA]<1} {error "ERROR: formula is not defined"};
+	#
+	#$r is log and function script to output
+	set r $::crvFit::LOG;
+	#
+	#$v is an array for variables
+	array set v $namedList;
+	#
+	#an additional mathematical function, that is based on estimation with `crvFit.tcl`, for Tcl expressions
+	#added function is called `crvFitLog_F(x)`
+	#
+	append r "\n\#=== additional mathematical function for Tcl expressions ==="
+	append r "\nproc ::tcl::mathfunc::crvFitLog_F \{x\} \{";
+	append r "\n\t\#an additional mathematical function, that is based on estimation with `crvFit.tcl`, for Tcl expressions";
+	append r "\n\t\# - \$x: a numerical value\n\t";
+	#
+	foreach e [array names v] {
+		append r "set $e $v($e)\;";
+	};
+	append r "\n\treturn \[expr \{$::crvFit::FORMULA\}\]\;";
+	#
+	append r "\n\}\;";
+	#
+	#file output
+	set C [open $fileName w];
+	fconfigure $C -encoding utf-8;
+	puts -nonewline $C $r;
+	close $C;
+	#
+	unset C;
+	#
+	return $namedList;
 };
