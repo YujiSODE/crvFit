@@ -47,6 +47,12 @@
 # 	returned value is named list
 # 	- $N: a number of estimated parameter sets in order to estimate average
 # 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
+#
+# - `::crvFit::outputLog namedList fileName;`
+# 	procedure that outputs estimation log and estimated tcl math function  
+# 	output function is called `crvFitLog_F(x)`
+# 	- $namedList: a named list that is returned by `::crvFit::estimate ?n?;` or `::crvFit::estimateMC N ?n?;`
+# 	- $fileName: a name of file to output
 #--------------------------------------------------------------------
 #
 #*** <namespace ::tcl::mathfunc> ***
@@ -458,7 +464,7 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	# - $N: a number of estimated parameter sets in order to estimate average
 	# - $n: sample size used for a single estimation based on the least absolute value method, default size is 100
 	#
-	variable ::crvFit::FORMULA;variable ::crvFit::PRM;variable ::crvFit::D;variable ::crvFit::LOG;
+	variable ::crvFit::FORMULA;variable ::crvFit::PRM;variable ::crvFit::RANGE;variable ::crvFit::D;variable ::crvFit::LOG;
 	#
 	#$N and $n are not less than 10
 	set N [expr {$N<10?10:int($N)}];
@@ -481,9 +487,17 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	};
 	set avg [expr {lAvg($l)}];
 	#
+	#log data
 	append ::crvFit::LOG "\n\#formula:$::crvFit::FORMULA";
 	append ::crvFit::LOG "\n\#data sets:$N";
 	append ::crvFit::LOG "\n\#sample size of a single estimation:$n";
+	append ::crvFit::LOG "\n\#--------------------------------------------------------------------";
+	#
+	append ::crvFit::LOG "\n\#ranges of parameters";
+	foreach e [array names ::crvFit::RANGE] {
+		append ::crvFit::LOG "\n\#$e \[$::crvFit::RANGE($e)\]";
+	};
+	#
 	append ::crvFit::LOG "\n\#--------------------------------------------------------------------";
 	append ::crvFit::LOG "\n\#averages\n\#$avg";
 	append ::crvFit::LOG "\n\#standard errors\n\#[expr {lSE($l,$avg)}]";
@@ -521,7 +535,7 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	return "[array get R] d_abs [format %e $::crvFit::D]";
 };
 #
-#procedure ...
+#procedure that outputs estimation log and tcl math function
 proc ::crvFit::outputLog {namedList fileName} {
 	# - $namedList: a named list that is returned by `::crvFit::estimate ?n?;` or `::crvFit::estimateMC N ?n?;`
 	# - $fileName: a name of file to output
@@ -548,9 +562,8 @@ proc ::crvFit::outputLog {namedList fileName} {
 	foreach e [array names v] {
 		append r "set $e $v($e)\;";
 	};
-	append r "\n\treturn \[expr \{$::crvFit::FORMULA\}\]\;";
 	#
-	append r "\n\}\;";
+	append r "\n\treturn \[expr \{$::crvFit::FORMULA\}\]\;\n\}\;";
 	#
 	#file output
 	set C [open $fileName w];
@@ -558,7 +571,7 @@ proc ::crvFit::outputLog {namedList fileName} {
 	puts -nonewline $C $r;
 	close $C;
 	#
-	unset C;
+	unset r v C;
 	#
 	return $namedList;
 };
