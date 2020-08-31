@@ -11,4 +11,4 @@ ______
 ## 2. Script
 #### Tcl
 It requires Tcl 8.6+.  
-- `crvFit.tcl`: main script in Tcl
+- `crvFit.tcl`
