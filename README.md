@@ -14,7 +14,7 @@ ______
 - `::crvFit::setFunction ?formula?;` 
  	Procedure that adds a mathematical function that returns a result of f($x) defined at namespace `::crvFit`.  
  	Generated function is called `crvFit_F(x)`, which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions.  
- 	- `$formula`: a formula for _f_(_x_), which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions, default value is `{$A*$x+$B}`
+ 	- `$formula`: a formula for _`f`_(_`x`_), which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions, default value is `{$A*$x+$B}`
 #
 # - `::crvFit::setRandomParameters;`
 # 	procedure that sets random parameters for generated function (`crvFit_F($x)`) based on given ranges
