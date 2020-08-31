@@ -7,6 +7,7 @@ GitHub: https://github.com/YujiSODE/crvFit
 ______
 
 ## 1. Description
+Namespace `::crvFit` has procedures to estimate curve fitting parameters.
 
 - `::crvFit::setFunction ?formula?;`  
  	Procedure that adds a mathematical function that returns a result of _`f`_(_`x`_) defined at namespace `::crvFit`.  
