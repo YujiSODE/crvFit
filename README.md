@@ -8,7 +8,7 @@ ______
 
 ## 1. Description
 
-- `::crvFit::setFunction ?formula?;` 
+- `::crvFit::setFunction ?formula?;`  
  	Procedure that adds a mathematical function that returns a result of _`f`_(_`x`_) defined at namespace `::crvFit`.  
  	Generated function is called `crvFit_F(x)`, which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions.  
  	- `$formula`: a formula for _`f`_(_`x`_), which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions, default value is `{$A*$x+$B}`
