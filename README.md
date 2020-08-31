@@ -5,3 +5,10 @@ GitHub: https://github.com/YujiSODE/crvFit
 >This software is released under the MIT License.  
 >See LICENSE or http://opensource.org/licenses/mit-license.php  
 ______
+
+## 1. Description
+
+## 2. Script
+#### Tcl
+It requires Tcl 8.6+.  
+- `crvFit.tcl`: main script in Tcl
