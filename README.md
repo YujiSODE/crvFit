@@ -23,29 +23,28 @@ ______
  	- `$parameterName`: a name of parameter to set
  	- `$value`: a numerical value
 
-# - `::crvFit::loadXY ?xyList?;`
-# 	procedure that loads list of x-y data  
-# 	stored data is returned when $xyList is not specified  
-# 	format of x-y data is "x,y"
-# 	- $xyList: a list of x-y data, and every element is expressed as "x,y"
-#
-# - `::crvFit::estimate ?n?;`
-#	procedure that estimates parameters  
-# 	returned value is named list
-# 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
-#
-# - `::crvFit::estimateMC N ?n?;`
-# 	procedure returns result of the least absolute value method with the Monte Carlo approximation  
-# 	returned value is named list
-# 	- $N: a number of estimated parameter sets in order to estimate average
-# 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
-#
-# - `::crvFit::outputLog namedList fileName;`
-# 	procedure that outputs estimation log and estimated tcl math function  
-# 	output function is called `crvFitLog_F(x)`
-# 	- $namedList: a named list that is returned by `::crvFit::estimate ?n?;` or `::crvFit::estimateMC N ?n?;`
-# 	- $fileName: a name of file to output
-#--------------------------------------------------------------------
+- `::crvFit::loadXY ?xyList?;`  
+  Procedure that loads list of x-y data.  
+ 	Stored data is returned when `$xyList` is not specified.  
+ 	Format of x-y data is "`x,y`".
+ 	- `$xyList`: a list of x-y data, and every element is expressed as "`x,y`"
+
+- `::crvFit::estimate ?n?;`  
+  Procedure that estimates parameters.  
+ 	Returned value is named list.
+ 	- `$n`: sample size used for a single estimation based on the least absolute value method, default size is `100`
+
+- `::crvFit::estimateMC N ?n?;`  
+ 	Procedure returns result of the least absolute value method with the Monte Carlo approximation.  
+ 	Returned value is named list.
+ 	- `$N`: a number of estimated parameter sets in order to estimate average
+ 	- `$n`: sample size used for a single estimation based on the least absolute value method, default size is `100`
+
+- `::crvFit::outputLog namedList fileName;`  
+ 	Procedure that outputs estimation log and estimated tcl math function.  
+ 	Output function is called `crvFitLog_F(x)`.
+ 	- `$namedList`: a named list that is returned by `::crvFit::estimate ?n?;` or `::crvFit::estimateMC N ?n?;`
+ 	- `$fileName`: a name of file to output
 
 ## 2. Script
 #### Tcl
