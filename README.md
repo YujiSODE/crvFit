@@ -8,13 +8,13 @@ ______
 
 ## 1. Description
 - `::crvFit::rand range;`  
-  procedure that returns a random number in range \[`min,max`\]
-# 	- $range: range for a random number expressed as "min,max"
-#
-# - `::crvFit::setFunction ?formula?;`
-# 	procedure that adds a mathematical function that returns a result of f($x) defined at namespace `::crvFit`  
-# 	generated function is called `crvFit_F(x)`, which is expressed with variable $x, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions
-# 	- $formula: a formula for f($x), which is expressed with variable $x, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions, default value is {$A*$x+$B}
+  Procedure that returns a random number in range \[`min,max`\].  
+ 	- $range: range for a random number expressed as "min,max"
+
+- `::crvFit::setFunction ?formula?;` 
+ 	Procedure that adds a mathematical function that returns a result of f($x) defined at namespace `::crvFit`.  
+ 	Generated function is called `crvFit_F(x)`, which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions.  
+ 	- `$formula`: a formula for `f($x)`, which is expressed with variable `$x`, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions, default value is `{$A*$x+$B}`
 #
 # - `::crvFit::setRandomParameters;`
 # 	procedure that sets random parameters for generated function (`crvFit_F($x)`) based on given ranges
