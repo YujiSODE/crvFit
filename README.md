@@ -7,6 +7,51 @@ GitHub: https://github.com/YujiSODE/crvFit
 ______
 
 ## 1. Description
+- `::crvFit::rand range;`  
+  procedure that returns a random number in range \[`min,max`\]
+# 	- $range: range for a random number expressed as "min,max"
+#
+# - `::crvFit::setFunction ?formula?;`
+# 	procedure that adds a mathematical function that returns a result of f($x) defined at namespace `::crvFit`  
+# 	generated function is called `crvFit_F(x)`, which is expressed with variable $x, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions
+# 	- $formula: a formula for f($x), which is expressed with variable $x, parameters (in upper case only), numerical values and mathematical functions in Tcl expressions, default value is {$A*$x+$B}
+#
+# - `::crvFit::setRandomParameters;`
+# 	procedure that sets random parameters for generated function (`crvFit_F($x)`) based on given ranges
+#
+# - `::crvFit::setRange parameterName range;`
+# 	procedure that sets range of random parameters
+# 	- $parameterName: a name of parameter to set
+# 	- $range: a range for a random number that is expressed as "min,max"
+#
+# - `::crvFit::setParameter parameterName value;`
+# 	procedure that sets parameter for generated function (`crvFit_F($x)`) based on given values
+# 	- $parameterName: a name of parameter to set
+# 	- $value: a numerical value
+#
+# - `::crvFit::loadXY ?xyList?;`
+# 	procedure that loads list of x-y data  
+# 	stored data is returned when $xyList is not specified  
+# 	format of x-y data is "x,y"
+# 	- $xyList: a list of x-y data, and every element is expressed as "x,y"
+#
+# - `::crvFit::estimate ?n?;`
+#	procedure that estimates parameters  
+# 	returned value is named list
+# 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
+#
+# - `::crvFit::estimateMC N ?n?;`
+# 	procedure returns result of the least absolute value method with the Monte Carlo approximation  
+# 	returned value is named list
+# 	- $N: a number of estimated parameter sets in order to estimate average
+# 	- $n: sample size used for a single estimation based on the least absolute value method, default size is 100
+#
+# - `::crvFit::outputLog namedList fileName;`
+# 	procedure that outputs estimation log and estimated tcl math function  
+# 	output function is called `crvFitLog_F(x)`
+# 	- $namedList: a named list that is returned by `::crvFit::estimate ?n?;` or `::crvFit::estimateMC N ?n?;`
+# 	- $fileName: a name of file to output
+#--------------------------------------------------------------------
 
 ## 2. Script
 #### Tcl
