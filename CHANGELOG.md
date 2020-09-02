@@ -3,7 +3,8 @@
 ## [Unreleased]
 ## [1.0] - 2020-09-02
 ## Changed
-- [`crvFit.tcl`] lines:
+- [`crvFit.tcl`] lines 526-527: `		set x [expr {double([lindex $xy 0])}];`  
+  `		set y [expr {double([lindex $xy 1])}];`
 - [`crvFit.tcl`] lines 518-521: `	#x-y data`  
   `	set x [expr {double(0)}];`  
   `	set y [expr {double(0)}];`  
