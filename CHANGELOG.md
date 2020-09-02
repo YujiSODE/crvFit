@@ -1,7 +1,7 @@
 # Change Log
 
 ## [Unreleased]
-## [1.0]
+## [1.0] - 
 ## Changed
 - []
 
