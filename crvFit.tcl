@@ -423,7 +423,7 @@ proc ::crvFit::estimate {{n 100}} {
 		set x($i) [expr {double([lindex $xy 0])}];
 		set y($i) [expr {double([lindex $xy 1])}];
 		#
-		set ::crvFit::D [expr {$::crvFit::D+abs($y($i)-crvFit_F($x($i)))}];
+		set ::crvFit::D [expr {abs($y($i)-crvFit_F($x($i)))}];
 		incr i 1;
 	};
 	set d $::crvFit::D;
@@ -515,17 +515,18 @@ proc ::crvFit::estimateMC {N {n 100}} {
 	set xys [::crvFit::loadXY];
 	#$Nxy is data length
 	set Nxy [llength $xys];
-	#x-y data as an array
-	array set x {};
-	array set y {};
+	#x-y data
+	set x [expr {double(0)}];
+	set y [expr {double(0)}];
+	#
 	set ::crvFit::D [expr {double(0)}];
 	set i 0;
 	while {$i<$Nxy} {
 		set xy [split [lindex $xys $i] ,]
-		set x($i) [expr {double([lindex $xy 0])}];
-		set y($i) [expr {double([lindex $xy 1])}];
+		set x [expr {double([lindex $xy 0])}];
+		set y [expr {double([lindex $xy 1])}];
 		#
-		set ::crvFit::D [expr {$::crvFit::D+abs($y($i)-crvFit_F($x($i)))}];
+		set ::crvFit::D [expr {abs($y-crvFit_F($x))}];
 		incr i 1;
 	};
 	#
