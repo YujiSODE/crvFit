@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+
+## Released
 ## [1.0] - 2020-09-02
 ## Changed
 - [`crvFit.tcl`] line 529: `		set ::crvFit::D [expr {abs($y-crvFit_F($x))}];`
