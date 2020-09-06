@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [1.1]
+- CSV file dealing interface
+
 ## Released
 ## [1.0] - 2020-09-02
 ## Changed
