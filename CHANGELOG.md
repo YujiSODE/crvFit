@@ -2,8 +2,9 @@
 
 ## [Unreleased]
 
-## [1.1]
-- CSV file dealing interface
+## [1.1] - 2020-09-07
+## Added
+- [`varCSV.tcl`]: CSV file dealing interface
 
 ## Released
 ## [1.0] - 2020-09-02
