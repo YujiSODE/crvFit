@@ -25,10 +25,10 @@
   
 - [`crvFit.tcl`] lines 518-521:
 
-      #x-y data
-      set x [expr {double(0)}];
-      set y [expr {double(0)}];
-      #
+      	#x-y data
+      	set x [expr {double(0)}];
+      	set y [expr {double(0)}];
+      	#
       
 - [`crvFit.tcl`] line 426: `		set ::crvFit::D [expr {abs($y($i)-crvFit_F($x($i)))}];`
 
