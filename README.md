@@ -49,7 +49,8 @@ Namespace `::crvFit` has procedures to estimate curve fitting parameters.
 
 ## 2. Script
 #### Tcl
-It requires Tcl 8.6+.  
+It requires Tcl 8.6+.
+#### Main script
 - `crvFit.tcl`
 
 ## 3. Library list
