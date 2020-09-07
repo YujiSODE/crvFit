@@ -18,8 +18,11 @@
 ## [1.0] - 2020-09-02
 ## Changed
 - [`crvFit.tcl`] line 529: `		set ::crvFit::D [expr {abs($y-crvFit_F($x))}];`
-- [`crvFit.tcl`] lines 526-527: `		set x [expr {double([lindex $xy 0])}];`  
-  `		set y [expr {double([lindex $xy 1])}];`
+- [`crvFit.tcl`] lines 526-527:
+
+      		set x [expr {double([lindex $xy 0])}];`  
+      		set y [expr {double([lindex $xy 1])}];`
+  
 - [`crvFit.tcl`] lines 518-521:
 
       #x-y data
