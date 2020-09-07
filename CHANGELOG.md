@@ -4,10 +4,12 @@
 
 ## [1.1] - 2020-09-07
 ## Changed
-- [`README.md`] lines 53-56: `#### Main script`  
-  `- `crvFit.tcl``  
-  `#### Additional script`  
-  `- \`varCSV.tcl\`: CSV file dealing interface`
+- [`README.md`] lines 53-56:
+
+      #### Main script
+      - `crvFit.tcl`
+      #### Additional script
+      - `varCSV.tcl`: CSV file dealing interface
 
 ## Added
 - [`varCSV.tcl`]: CSV file dealing interface
