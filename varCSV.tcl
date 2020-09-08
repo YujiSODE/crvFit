@@ -27,6 +27,11 @@
 # 	- $fileName: file name of CSV file to load
 # 	- $x and $y: indexed coordinates for the left of row
 # 	- $encoding: an optional encoding name
+#
+# - `::varCSV::getSize fileName ?encoding?;`
+# 	procedure that returns the maximum size of CSV file
+# 	- $fileName: file name of CSV file to load
+# 	- $encoding: an optional encoding name
 ##===================================================================
 #
 set auto_noexec 1;
@@ -118,4 +123,40 @@ proc ::varCSV::getRow {fileName x y {encoding {}}} {
 	#
 	unset CSV 2dList cell C;
 	return $List;
+};
+#
+#procedure that returns the maximum size of CSV file
+proc ::varCSV::getSize {fileName {encoding {}}} {
+	# - $fileName: file name of CSV file to load
+	# - $encoding: an optional encoding name
+	#
+	set CSV {};
+	set wList {};
+	set w [expr {int(0)}];
+	#
+	#the maximum width of CSV file
+	set wMax [expr {int(0)}];
+	#
+	#height of CSV file
+	set height [expr {int(0)}];
+	#
+	#=== loading CSV file ===
+	set C [open $fileName r];
+	if {[llength $encoding]} {
+		fconfigure $C -encoding $encoding;
+	};
+	set CSV [read -nonewline $C];
+	close $C;
+	#========================
+	#height
+	set height [llength [set wList [split $CSV \n]]];
+	#
+	#width
+	foreach e $wList {
+		set w [llength [split $e ,]];
+		set wMax [expr {$w>$wMax?$w:$wMax}];
+	};
+	#
+	unset CSV wList w C;
+	return [list width $wMax height $height];
 };
