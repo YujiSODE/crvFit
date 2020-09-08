@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.1] - 2020-09-08
+## Added
+- [`varCSV.tcl`]: added a procedure `::varCSV::getSize fileName ?encoding?;`  
+  `::varCSV::getSize` is procedure that returns the maximum size of CSV file
+
+## Changed
+- [`varCSV.tcl`]: added namespace `::varCSV`
+
 ## [1.1] - 2020-09-07
 ## Changed
 - [`README.md`] lines 53-56:

@@ -9,23 +9,28 @@
 #CSV file dealing interface
 #
 #=== Synopsis ===
-# - `lJoin list1 list2 char;`
+# - `::varCSV::lJoin list1 list2 char;`
 # 	procedure that returns a list of joined elements with given character
 # 	- $list1 and $list2: Tcl lists
 # 	- $char: joining character
 #
-# - `getColumn fileName x y ?encoding?;`
+# - `::varCSV::getColumn fileName x y ?encoding?;`
 # 	procedure that returns values of a column in a given CSV file  
 #	a range of the column is defined as (x,y) to (x,y_n), and (x,y_n+1) is a blank cell
 # 	- $fileName: file name of CSV file to load
 # 	- $x and $y: indexed coordinates for the top of column
 # 	- $encoding: an optional encoding name
 #
-# - `getRow fileName x y ?encoding;`
+# - `::varCSV::getRow fileName x y ?encoding;`
 # 	procedure that returns values of a row in a given CSV file  
 # 	a range of the row is defined as (x,y) to (x_n,y), and (x_n+1,y) is a blank cell
 # 	- $fileName: file name of CSV file to load
 # 	- $x and $y: indexed coordinates for the left of row
+# 	- $encoding: an optional encoding name
+#
+# - `::varCSV::getSize fileName ?encoding?;`
+# 	procedure that returns the maximum size of CSV file
+# 	- $fileName: file name of CSV file to load
 # 	- $encoding: an optional encoding name
 ##===================================================================
 #
@@ -33,8 +38,12 @@ set auto_noexec 1;
 package require Tcl 8.6;
 #--------------------------------------------------------------------
 #
+#*** <namespace: ::varCSV> ***
+namespace eval ::varCSV {};
+#=== procedures ===
+#
 #procedure that returns a list of joined elements with given character
-proc lJoin {list1 list2 char} {
+proc ::varCSV::lJoin {list1 list2 char} {
 	# - $list1 and $list2: Tcl lists
 	# - $char: joining character
 	#
@@ -46,7 +55,7 @@ proc lJoin {list1 list2 char} {
 #
 #procedure that returns values of a column in a given CSV file
 #a range of the column is defined as (x,y) to (x,y_n), and (x,y_n+1) is a blank cell
-proc getColumn {fileName x y {encoding {}}} {
+proc ::varCSV::getColumn {fileName x y {encoding {}}} {
 	# - $fileName: file name of CSV file to load
 	# - $x and $y: indexed coordinates for the top of column
 	# - $encoding: an optional encoding name
@@ -82,7 +91,7 @@ proc getColumn {fileName x y {encoding {}}} {
 #
 #procedure that returns values of a row in a given CSV file
 #a range of the row is defined as (x,y) to (x_n,y), and (x_n+1,y) is a blank cell
-proc getRow {fileName x y {encoding {}}} {
+proc ::varCSV::getRow {fileName x y {encoding {}}} {
 	# - $fileName: file name of CSV file to load
 	# - $x and $y: indexed coordinates for the left of row
 	# - $encoding: an optional encoding name
@@ -114,4 +123,40 @@ proc getRow {fileName x y {encoding {}}} {
 	#
 	unset CSV 2dList cell C;
 	return $List;
+};
+#
+#procedure that returns the maximum size of CSV file
+proc ::varCSV::getSize {fileName {encoding {}}} {
+	# - $fileName: file name of CSV file to load
+	# - $encoding: an optional encoding name
+	#
+	set CSV {};
+	set wList {};
+	set w [expr {int(0)}];
+	#
+	#the maximum width of CSV file
+	set wMax [expr {int(0)}];
+	#
+	#height of CSV file
+	set height [expr {int(0)}];
+	#
+	#=== loading CSV file ===
+	set C [open $fileName r];
+	if {[llength $encoding]} {
+		fconfigure $C -encoding $encoding;
+	};
+	set CSV [read -nonewline $C];
+	close $C;
+	#========================
+	#height
+	set height [llength [set wList [split $CSV \n]]];
+	#
+	#width
+	foreach e $wList {
+		set w [llength [split $e ,]];
+		set wMax [expr {$w>$wMax?$w:$wMax}];
+	};
+	#
+	unset CSV wList w C;
+	return [list width $wMax height $height];
 };
