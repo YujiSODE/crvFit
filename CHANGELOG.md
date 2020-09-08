@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.1] - 2020-09-08
+## Changed
+- [`varCSV.tcl`]: added namespace `::varCSV`
+
 ## [1.1] - 2020-09-07
 ## Changed
 - [`README.md`] lines 53-56:
