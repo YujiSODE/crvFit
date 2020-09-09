@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.1] - 2020-09-09
+## Added
+- [`varCSV.tcl`]: added a procedure `::varCSV::scan fileName ?encoding?;`  
+  `::varCSV::scan` is procedure that returns a result of CSV structure scan
+
 ## [1.1] - 2020-09-08
 ## Added
 - [`varCSV.tcl`]: added a procedure `::varCSV::getSize fileName ?encoding?;`  

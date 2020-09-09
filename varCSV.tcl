@@ -32,6 +32,15 @@
 # 	procedure that returns the maximum size of CSV file
 # 	- $fileName: file name of CSV file to load
 # 	- $encoding: an optional encoding name
+#
+# - `::varCSV::scan fileName ?encoding?;`
+# 	procedure that returns a result of CSV structure scan
+# 	- $fileName: file name of CSV file to load
+# 	- $encoding: an optional encoding name
+#
+# 		"CSV structure"
+# 		[filled cell: `C`]
+# 		[blank cell: `_`]
 ##===================================================================
 #
 set auto_noexec 1;
@@ -159,4 +168,42 @@ proc ::varCSV::getSize {fileName {encoding {}}} {
 	#
 	unset CSV wList w C;
 	return [list width $wMax height $height];
+};
+#
+#procedure that returns a result of CSV structure scan
+#	"CSV structure"
+#	[filled cell: `C`]
+#	[blank cell: `_`]
+proc ::varCSV::scan {fileName {encoding {}}} {
+	# - $fileName: file name of CSV file to load
+	# - $encoding: an optional encoding name
+	#
+	set CSV {};
+	set rowList {};
+	set n 0;
+	set i 0;
+	set result {};
+	#
+	#=== loading CSV file ===
+	set C [open $fileName r];
+	if {[llength $encoding]} {
+		fconfigure $C -encoding $encoding;
+	};
+	set CSV [read -nonewline $C];
+	close $C;
+	#========================
+	#
+	set rowList [split $CSV \n];
+	set n [llength $rowList];
+	#
+	while {$i<$n} {
+		foreach e [split [lindex $rowList $i] ,] {
+			append result [expr {[llength $e]>0?{C}:{_}}];
+		};
+		append result [expr {$i<$n-1?"\n":{}}];
+		incr i 1;
+	};
+	#
+	unset CSV C rowList n i;
+	return $result;
 };
