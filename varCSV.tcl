@@ -34,11 +34,11 @@
 # 	- $encoding: an optional encoding name
 #
 # - `::varCSV::scan fileName ?encoding?;`
-# 	procedure that returns a result of csv structure scan
+# 	procedure that returns a result of CSV structure scan
 # 	- $fileName: file name of CSV file to load
 # 	- $encoding: an optional encoding name
 #
-# 		"csv structure"
+# 		"CSV structure"
 # 		[filled cell: `C`]
 # 		[blank cell: `_`]
 ##===================================================================
@@ -170,8 +170,8 @@ proc ::varCSV::getSize {fileName {encoding {}}} {
 	return [list width $wMax height $height];
 };
 #
-#procedure that returns a result of csv structure scan
-#	"csv structure"
+#procedure that returns a result of CSV structure scan
+#	"CSV structure"
 #	[filled cell: `C`]
 #	[blank cell: `_`]
 proc ::varCSV::scan {fileName {encoding {}}} {
