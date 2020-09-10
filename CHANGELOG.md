@@ -4,7 +4,8 @@
 
 ## [1.1] - 2020-09-10
 ## Added
-- [`sample05.tcl`]: code sample which using CSV file data via `varCSV.tcl`
+- [`csvSample.csv`]: sample CSV data
+- [`sample05.tcl`]: code sample which uses CSV file data via `varCSV.tcl`
 
 ## [1.1] - 2020-09-09
 ## Added
