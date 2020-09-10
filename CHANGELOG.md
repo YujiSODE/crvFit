@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.1] - 2020-09-10
+## Added
+- [`csvSample.csv`]: sample CSV data
+- [`sample05.tcl`]: code sample which uses CSV file data via `varCSV.tcl`
+
 ## [1.1] - 2020-09-09
 ## Added
 - [`varCSV.tcl`]: added a procedure `::varCSV::scan fileName ?encoding?;`  
