@@ -50,10 +50,19 @@ Namespace `::crvFit` has procedures to estimate curve fitting parameters.
 ## 2. Script
 #### Tcl
 It requires Tcl 8.6+.
+
 #### Main script
 - `crvFit.tcl`
 #### Additional script
 - `varCSV.tcl`: CSV file dealing interface
+
+#### Sample script and sample data
+- `sample01.tcl`, 
+- `sample02.tcl`
+- `sample03.tcl`
+- `sample04.tcl`
+- `sample05.tcl`
+- `csvSample.csv`
 
 ## 3. Library list
 - Sode, Y. 2018. lSum_min.tcl: https://gist.github.com/YujiSODE/1f9a4e2729212691972b196a76ba9bd0
