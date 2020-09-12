@@ -32,7 +32,7 @@
 ## Added
 - [`varCSV.tcl`]: CSV file dealing interface
 
-## Released
+## Released: [1.0] - 2020-09-05 
 ## [1.0] - 2020-09-02
 ## Changed
 - [`crvFit.tcl`] line 529: `		set ::crvFit::D [expr {abs($y-crvFit_F($x))}];`
