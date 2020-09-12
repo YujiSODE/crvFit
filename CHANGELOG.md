@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.1] - 2020-09-12
+## Added
+- [`README.md`]: description of **`Sample script and sample data`**
+
 ## [1.1] - 2020-09-10
 ## Added
 - [`csvSample.csv`]: sample CSV data
