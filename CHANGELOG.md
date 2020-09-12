@@ -50,5 +50,5 @@
       
 - [`crvFit.tcl`] line 426: `		set ::crvFit::D [expr {abs($y($i)-crvFit_F($x($i)))}];`
 
-## Released
+## Released: [0.1 beta] - 2020-08-31
 ## [0.1 beta] - 2020-08-31
