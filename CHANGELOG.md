@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+## Released: [1.1] - 2020-09-12
 ## [1.1] - 2020-09-12
 ## Added
 - [`README.md`]: description of **`Sample script and sample data`**
@@ -36,7 +37,7 @@
 ## Added
 - [`varCSV.tcl`]: CSV file dealing interface
 
-## Released: [1.0] - 2020-09-05 
+## Released: [1.0] - 2020-09-05
 ## [1.0] - 2020-09-02
 ## Changed
 - [`crvFit.tcl`] line 529: `		set ::crvFit::D [expr {abs($y-crvFit_F($x))}];`
