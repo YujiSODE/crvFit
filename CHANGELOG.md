@@ -4,7 +4,15 @@
 
 ## [2.0] - 2020-09-15
 ## Fixed
-- [`crvFit.tcl`] lines:
+- [`crvFit.tcl`] line 282-286:
+
+     	#$r0 = $r1
+    	if {!($r0!=$r1)} {
+    		return [format %e $r0];
+    	};
+    	#$r0 != $r1
+
+- [`crvFit.tcl`] line 278: ` 	variable ::crvFit::EPS;`
 
 - [`crvFit.tcl`] lines 264-268:
 
