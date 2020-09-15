@@ -4,7 +4,15 @@
 
 ## [2.0] - 2020-09-15
 ## Fixed
-- [`crvFit.tcl`]
+- [`crvFit.tcl`] lines:
+
+- [`crvFit.tcl`] lines 264-268:
+
+    	#=== epsilon ===
+    	variable EPS 1.0;
+    	while {1.0+$EPS!=1.0} {
+    		set EPS [expr {$EPS/2.0}];
+	    };
 
 ## Released: [1.1] - 2020-09-12
 ## [1.1] - 2020-09-12
