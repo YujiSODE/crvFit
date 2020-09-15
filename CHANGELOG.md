@@ -4,7 +4,9 @@
 
 ## [2.0] - 2020-09-15
 ## Fixed
-- [`crvFit.tcl`] line 282-286:
+- [`crvFit.tcl`] line 293: ` 		set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];`
+- [`crvFit.tcl`] line 291: ` 	set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];`
+- [`crvFit.tcl`] lines 282-286:
 
      	#$r0 = $r1
     	if {!($r0!=$r1)} {
