@@ -261,6 +261,11 @@ namespace eval ::crvFit {
 	#
 	#log of estimation
 	variable LOG {};
+	#=== epsilon ===
+	variable EPS 1.0;
+	while {1.0+$EPS!=1.0} {
+		set EPS [expr {$EPS/2.0}];
+	};
 };
 #
 #=== procedures ===
@@ -270,16 +275,22 @@ proc ::crvFit::rand {range} {
 	# - $range: a range for a random number that is expressed as "min,max"
 	#
 	#rand() in tcl math functions returns in range (0,1)
+	variable ::crvFit::EPS;
 	set r [split $range ,];
 	set r0 [expr {double([lindex $r 0])}];
 	set r1 [expr {double([lindex $r 1])}];
+	#$r0 = $r1
+	if {!($r0!=$r1)} {
+		return [format %e $r0];
+	};
+	#$r0 != $r1
 	if {$r1<$r0} {
 		set r0 [expr {double([lindex $r 1])}];
 		set r1 [expr {double([lindex $r 0])}];
 	};
-	set rnd [expr {$r0+rand()*($r1+0.1)-0.1}];
+	set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];
 	while {$rnd<$r0||$r1<$rnd} {
-		set rnd [expr {$r0+rand()*($r1+0.1)-0.1}];
+		set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];
 	};
 	unset r r0 r1;
 	return [format %e $rnd];
