@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [2.0] - 2020-09-15
+## Fixed
+range of random numbers
+- [`crvFit.tcl`] line 293: ` 		set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];`
+- [`crvFit.tcl`] line 291: ` 	set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];`
+- [`crvFit.tcl`] lines 282-286:
+
+     	#$r0 = $r1
+    	if {!($r0!=$r1)} {
+    		return [format %e $r0];
+    	};
+    	#$r0 != $r1
+
+- [`crvFit.tcl`] line 278: ` 	variable ::crvFit::EPS;`
+
+- [`crvFit.tcl`] lines 264-268:
+
+    	#=== epsilon ===
+    	variable EPS 1.0;
+    	while {1.0+$EPS!=1.0} {
+    		set EPS [expr {$EPS/2.0}];
+	    };
+
 ## Released: [1.1] - 2020-09-12
 ## [1.1] - 2020-09-12
 ## Added
