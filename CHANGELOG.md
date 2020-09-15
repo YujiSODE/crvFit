@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+## Released: [2.0] - 2020-09-16
 ## [2.0] - 2020-09-15
 ## Fixed
 range of random numbers
