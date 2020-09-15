@@ -4,6 +4,7 @@
 
 ## [2.0] - 2020-09-15
 ## Fixed
+range of random numbers
 - [`crvFit.tcl`] line 293: ` 		set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];`
 - [`crvFit.tcl`] line 291: ` 	set rnd [expr {$r0+rand()*($r1-$r0+$::crvFit::EPS)-$::crvFit::EPS}];`
 - [`crvFit.tcl`] lines 282-286:
